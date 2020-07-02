@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a824c22957be53c6da5b8a743066dfcb",
+    "revision": "8808e1b9a48fae46c9701d5b4d7425f1",
     "url": "/phaser-world-nav/index.html"
   },
   {
-    "revision": "017ad21615a0e6cd6dec",
+    "revision": "3c9344f154b78d8e75f3",
     "url": "/phaser-world-nav/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/phaser-world-nav/static/js/2.97a1c68b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "017ad21615a0e6cd6dec",
-    "url": "/phaser-world-nav/static/js/main.1b8075d6.chunk.js"
+    "revision": "3c9344f154b78d8e75f3",
+    "url": "/phaser-world-nav/static/js/main.e6444595.chunk.js"
   },
   {
     "revision": "1ee5f32bd706f87d9c51",
