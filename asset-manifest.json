@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/phaser-world-nav/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/phaser-world-nav/static/js/main.5de211ab.chunk.js",
-    "main.js.map": "/phaser-world-nav/static/js/main.5de211ab.chunk.js.map",
+    "main.js": "/phaser-world-nav/static/js/main.1b8075d6.chunk.js",
+    "main.js.map": "/phaser-world-nav/static/js/main.1b8075d6.chunk.js.map",
     "runtime-main.js": "/phaser-world-nav/static/js/runtime-main.30a1507b.js",
     "runtime-main.js.map": "/phaser-world-nav/static/js/runtime-main.30a1507b.js.map",
     "static/js/2.97a1c68b.chunk.js": "/phaser-world-nav/static/js/2.97a1c68b.chunk.js",
     "static/js/2.97a1c68b.chunk.js.map": "/phaser-world-nav/static/js/2.97a1c68b.chunk.js.map",
     "index.html": "/phaser-world-nav/index.html",
-    "precache-manifest.79d67cdc31fc63b1e0000683c40c14f1.js": "/phaser-world-nav/precache-manifest.79d67cdc31fc63b1e0000683c40c14f1.js",
+    "precache-manifest.e6d8c06adaaf3e94f910fbad93c37263.js": "/phaser-world-nav/precache-manifest.e6d8c06adaaf3e94f910fbad93c37263.js",
     "service-worker.js": "/phaser-world-nav/service-worker.js",
     "static/css/main.5ecd60fb.chunk.css.map": "/phaser-world-nav/static/css/main.5ecd60fb.chunk.css.map",
     "static/js/2.97a1c68b.chunk.js.LICENSE.txt": "/phaser-world-nav/static/js/2.97a1c68b.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.30a1507b.js",
     "static/js/2.97a1c68b.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.5de211ab.chunk.js"
+    "static/js/main.1b8075d6.chunk.js"
   ]
 }
