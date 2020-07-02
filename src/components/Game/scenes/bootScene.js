@@ -15,11 +15,13 @@ class BootScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('map', 'phaser-world-nav/GameAssets/map.png');
-        this.load.spritesheet('idle', 'phaser-world-nav/GameAssets/idle.png', {
+        this.load.setBaseURL("./phaser-world-nav")
+        this.load.image('map', 'GameAssets/map.png');
+        this.load.spritesheet('idle', 'GameAssets/idle.png', {
             frameWidth: 96,
             frameHeight: 160,
         })
+        this.load.tilemapTiledJSON('mappy', 'GameAssets/gameMap.json');
         this.load.on('progress', progress =>
             this.loadText.setText(`Loading ...${progress}`));
         this.load.on('complete', () => this.scene.start('mainScene'));
