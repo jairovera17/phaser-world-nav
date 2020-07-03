@@ -25,8 +25,8 @@ class NavGame extends Component {
             scale: {
                 parent: 'phaser-game',
                 mode: Phaser.Scale.FIT,
-                height: document.documentElement.clientHeight,//* DPR,
-                width: document.documentElement.clientWidth,// * DPR,
+                height: 720,//* DPR,
+                width: 1200,// * DPR,
                 //zoom: 1 / DPR
             },
             physics: {

@@ -15,7 +15,7 @@ class BootScene extends Phaser.Scene {
     }
 
     preload() {
-       // this.load.setBaseURL("./phaser-world-nav")
+        this.load.setBaseURL("./phaser-world-nav")
         this.load.image('map', 'GameAssets/map.png');
         this.load.spritesheet('idle', 'GameAssets/idle.png', {
             frameWidth: 96,
@@ -28,6 +28,11 @@ class BootScene extends Phaser.Scene {
         this.load.spritesheet('frontWalk', 'GameAssets/frontWalk.png', {
             frameWidth: 120,
             frameHeight: 192,
+        })
+
+        this.load.spritesheet('health', 'GameAssets/saveIcon.png', {
+            frameWidth: 100,
+            frameHeight: 90
         })
         this.load.tilemapTiledJSON('mappy', 'GameAssets/gameMap.json');
         this.load.on('progress', progress =>

@@ -7,11 +7,7 @@ class MainScene extends Phaser.Scene {
         super({ key: 'mainScene' });
     }
 
-    create() {
-        const mappy = this.add.tilemap('mappy');
-        const tileset = mappy.addTilesetImage('map');
-        mappy.createStaticLayer('background', [tileset], 0, 0)
-
+    preload() {
         this.anims.create({
             key: 'idle',
             frames: this.anims.generateFrameNames('idle'),
@@ -30,15 +26,31 @@ class MainScene extends Phaser.Scene {
             frameRate: 10,
             repeat: -1,
         });
+        this.anims.create({
+            key: 'rotateIcon',
+            frames: this.anims.generateFrameNames('health'),
+            frameRate: 10,
+            repeat: -1
+        })
+    }
 
-
+    create() {
+        this.health = 0;
+        this.text = this.add.text(0, 0, 'Health: 0', { fontFamily: 'Arial', fontSize: '5em' })
+            .setDepth(1);
+        const mappy = this.add.tilemap('mappy');
+        const tileset = mappy.addTilesetImage('map');
+        mappy.createStaticLayer('background', [tileset], 0, 0);
         const objectLayer = mappy.getObjectLayer('navMesh');
+        const { x, y, width, height } = objectLayer.objects[0];
+        console.log(objectLayer);
         const navMesh = this.navMeshPlugin.buildMeshFromTiled('mesh', objectLayer, 4);
-        const graphics = this.add.graphics(0, 0).setAlpha(0.5);
-        navMesh.enableDebug(graphics);
 
-        // const player = this.add.follower( 0,0, navMesh);
-        const player = new FollowerSprite(this, 120, 250, navMesh, 'idle')
+        const items = mappy.createFromObjects('items', 3376, 'health')
+            .map(sprite => sprite
+                .play('rotateIcon')
+                .setScale(1));
+        const player = new FollowerSprite(this, x + width / 2, y + height / 2, navMesh, 'idle')
             .setOrigin(0.5, 0.9)
             .onTopLeftMovement(() => {
                 player.play('frontWalk');
@@ -54,37 +66,26 @@ class MainScene extends Phaser.Scene {
                 player.setFlipX(true);
             }).onMovementComplete(() => player.play('idle'))
         player.play('idle');
+        items.forEach(item => this.physics.world.enable(item));
+
+        this.physics.world.addOverlap(player, items,
+            (player, item) => {
+                this.physics.world.disable(item);
+                this.health++;
+                this.text.setText(`Health: ${this.health}`)
+                this.tweens.add({
+                    targets: item,
+                    x: 0,
+                    y: 0,
+                    duration: 1500,
+                    alpha: { from: 1, to: 0.25 },
+                    onComplete: () => item.destroy()
+                })
+            });
 
         this.input.on('pointerdown', pointer => {
-            const start = new Phaser.Math.Vector2(player.x, player.y);
-            const end = new Phaser.Math.Vector2(pointer.x, pointer.y);
-            player.goTo(end);
+            player.goTo(new Phaser.Math.Vector2(pointer.x, pointer.y));
         })
-    }
-
-    create2() {
-        const { width, height } = this.game.canvas;
-        this.gameMap = this.add.image(0, 0, 'map');
-        this.gameMap.setOrigin(0).setInteractive({ useHandCursor: true });
-        this.gameMap.setDisplaySize(width, height);
-
-        const player = this.add.sprite(width / 2, height / 2, 'idle', 0)
-            .setOrigin(0.5, 1);
-
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNames('idle'),
-            frameRate: 10,
-            repeat: -1,
-
-        });
-        player.play('idle');
-        this.gameMap.on('pointerdown', ({ x, y }) => this.tweens.add({
-            targets: player,
-            duration: 1000,
-            ease: 'Linear',
-            x, y
-        }))
     }
 }
 
