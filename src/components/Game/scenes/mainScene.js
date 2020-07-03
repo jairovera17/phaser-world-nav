@@ -8,13 +8,9 @@ class MainScene extends Phaser.Scene {
     }
 
     create() {
-        const { width, height } = this.game.canvas;
         const mappy = this.add.tilemap('mappy');
         const tileset = mappy.addTilesetImage('map');
-
-        const layer = mappy
-            .createStaticLayer('background', [tileset], 0, 0)
-
+        mappy.createStaticLayer('background', [tileset], 0, 0)
 
         this.anims.create({
             key: 'idle',
@@ -22,6 +18,19 @@ class MainScene extends Phaser.Scene {
             frameRate: 8,
             repeat: -1,
         });
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNames('walk'),
+            frameRate: 10,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: 'frontWalk',
+            frames: this.anims.generateFrameNames('frontWalk'),
+            frameRate: 10,
+            repeat: -1,
+        });
+
 
         const objectLayer = mappy.getObjectLayer('navMesh');
         const navMesh = this.navMeshPlugin.buildMeshFromTiled('mesh', objectLayer, 4);
@@ -30,7 +39,20 @@ class MainScene extends Phaser.Scene {
 
         // const player = this.add.follower( 0,0, navMesh);
         const player = new FollowerSprite(this, 120, 250, navMesh, 'idle')
-            .setOrigin(0.5, 0.9);
+            .setOrigin(0.5, 0.9)
+            .onTopLeftMovement(() => {
+                player.play('frontWalk');
+                player.setFlipX(false);
+            }).onTopRightMovement(() => {
+                player.play('frontWalk');
+                player.setFlipX(true);
+            }).onBottomLeftMovement(() => {
+                player.play('walk');
+                player.setFlipX(false);
+            }).onBottomRightMovement(() => {
+                player.play('walk');
+                player.setFlipX(true);
+            }).onMovementComplete(() => player.play('idle'))
         player.play('idle');
 
         this.input.on('pointerdown', pointer => {

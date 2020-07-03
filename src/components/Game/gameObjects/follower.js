@@ -45,16 +45,75 @@ class FollowerSprite extends Phaser.GameObjects.Sprite {
             // Check if we have reached the current target (within a fudge factor)
             const { x, y } = this.currentTarget;
             const distance = Phaser.Math.Distance.Between(this.x, this.y, x, y);
-
+            this.emitMovement(x, y);
             if (distance < 5) {
                 // If there is path left, grab the next point. Otherwise, null the target.
                 if (this.path.length > 0) this.currentTarget = this.path.shift();
-                else this.currentTarget = null;
+                else {
+                    this.currentTarget = null;
+                    this.emit('onMovementComplete');
+                }
             }
 
             // Still got a valid target?
             if (this.currentTarget) this.moveTowards(this.currentTarget, 200, deltaTime / 1000);
         }
+    }
+
+    emitMovement(x, y) {
+        const isGoingDown = y > this.y;
+        const isGoingRight = x > this.x;
+        if (isGoingDown && isGoingRight)
+            this.emit('bottomRightMovement');
+        else if (isGoingDown && !isGoingRight)
+            this.emit('bottomLeftMovement')
+        else if (!isGoingDown && isGoingRight)
+            this.emit('topRightMovement');
+        else
+            this.emit('topLeftMovement');
+    }
+
+    onTopLeftMovement(callback) {
+        return this.on('topLeftMovement', () => {
+            if (this.directionState !== FollowerDirection.TOP_LEFT) {
+                callback();
+                this.directionState = FollowerDirection.TOP_LEFT;
+            }
+        });
+    }
+
+    onTopRightMovement(callback) {
+        return this.on('topRightMovement', () => {
+            if (this.directionState !== FollowerDirection.TOP_RIGHT) {
+                callback();
+                this.directionState = FollowerDirection.TOP_RIGHT;
+            }
+        });
+    }
+
+    onBottomLeftMovement(callback) {
+        return this.on('bottomLeftMovement', () => {
+            if (this.directionState !== FollowerDirection.BOTTOM_LEFT) {
+                callback();
+                this.directionState = FollowerDirection.BOTTOM_LEFT;
+            }
+        });
+    }
+
+    onBottomRightMovement(callback) {
+        return this.on('bottomRightMovement', () => {
+            if (this.directionState !== FollowerDirection.BOTTOM_RIGHT) {
+                callback();
+                this.directionState = FollowerDirection.BOTTOM_RIGHT;
+            }
+        });
+    }
+
+    onMovementComplete(callback) {
+        return this.on('onMovementComplete', ()=>{
+            this.directionState = null;
+            callback()
+        });
     }
 
     moveTowards(targetPosition, maxSpeed = 200, elapsedSeconds) {
@@ -70,6 +129,14 @@ class FollowerSprite extends Phaser.GameObjects.Sprite {
         if (this.scene) this.scene.events.off("update", this.update, this);
         super.destroy();
     }
+}
+
+const FollowerDirection = {
+    TOP_LEFT: 0,
+    TOP_RIGHT: 1,
+    BOTTOM_LEFT: 2,
+    BOTTOM_RIGHT: 3
+
 }
 
 export default FollowerSprite;
