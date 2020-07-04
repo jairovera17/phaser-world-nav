@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/phaser-world-nav/precache-manifest.535e7b0c55f431b47eb926cb6e816953.js"
+  "/phaser-world-nav/precache-manifest.d14f030ce2d5eebb2fa99b7c05be668f.js"
 );
 
 self.addEventListener('message', (event) => {
